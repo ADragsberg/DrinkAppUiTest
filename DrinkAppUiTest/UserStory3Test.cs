@@ -14,6 +14,7 @@ namespace DrinkAppUiTest
     {
         private static readonly string DriverDirectory = "C:\\webdrivers";
         private static IWebDriver _driver;
+        private const string _url = "TODO";
 
         [ClassInitialize]
         public static void Setup(TestContext context) // Nok vigtigt at den er static, har TestContext som parameter.
@@ -30,9 +31,49 @@ namespace DrinkAppUiTest
         }
 
         [TestMethod]
-        public void TestMethod1()
+        public void TestDrinkName()
         {
+            //string url = useLocal ? _localUrl : _onlineUrl;
+
+            _driver.Navigate().GoToUrl(_url);
+
+            string nameToBeExpected = "Mojito";
+            string nameXpath = $"//*[text()[contains(.,'{nameToBeExpected}')]]";
+
+            // Find the elements
+            IWebElement element = _driver.FindElement(By.XPath(nameXpath));
+
+            // Assert
+            Assert.AreEqual(nameToBeExpected, element.Text);
         }
 
+        [TestMethod]
+        public void TestIngredientName()
+        {
+            //string url = useLocal ? _localUrl : _onlineUrl;
+
+            _driver.Navigate().GoToUrl(_url);
+
+            string nameToBeExpected = "Lime";
+            string nameXpath = $"//*[text()[contains(.,'{nameToBeExpected}')]]";
+
+            // Find the elements
+            IWebElement element = _driver.FindElement(By.XPath(nameXpath));
+
+            // Assert
+            Assert.AreEqual(nameToBeExpected, element.Text);
+        }
+
+        [TestMethod]
+        public void TestIngredientListExists()
+        {
+            //string url = useLocal ? _localUrl : _onlineUrl;
+
+            _driver.Navigate().GoToUrl(_url);
+
+            string idOfListToBeExpected = "Ingredientlist";
+
+            Assert.ThrowsException<NoSuchElementException>(() => _driver.FindElement(By.Id(idOfListToBeExpected)));
+        }
     }
 }
