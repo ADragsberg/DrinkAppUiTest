@@ -38,63 +38,78 @@ namespace DrinkAppUiTest
 
             //Hent Listen
             WebDriverWait wdWait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
-            IWebElement ventPÂListe = wdWait.Until(ventPÂListe => ventPÂListe.FindElement(By.Id("drinksListe")));
-            ReadOnlyCollection<IWebElement> drinksListe = _driver.FindElements(By.Id("drinksListe"));
+            IWebElement ventPÂListe = wdWait.Until(ventPÂListe => ventPÂListe.FindElement(By.TagName("li")));
 
+            IReadOnlyList<IWebElement> drinksListe = _driver.FindElements(By.ClassName("drinkNavn"));
+            
+            
             //lav kopi af listen
 
-            List<IWebElement> listeKopi = new List<IWebElement>(drinksListe);
-
-            //sorter kopien TODO
-
-            listeKopi.Sort();
-
-            int count = 0;
-            //sammenlign listerne
+            Assert.AreEqual(25, drinksListe.Count);
+            List<string> listeKopi1 = new List<string>();
             foreach (var drink in drinksListe)
             {
-                Assert.AreEqual(drinksListe[count], listeKopi[count]);
-                count++;
+                listeKopi1.Add(drink.Text);
             }
+            Assert.AreEqual(25, listeKopi1.Count);
 
-            ////Test at f¯rste objekt starter med a.
-            //IWebElement firstInList = drinksListe[0];
+            List<string> listeKopi2 = new List<string>(listeKopi1);
+            Assert.AreEqual(25, listeKopi2.Count);
 
-            //Assert.IsTrue(firstInList.Text.ToLower().StartsWith("a"));
-            ////Test at sidste objekt i listen starter med z.
-            //IWebElement lastInList = _driver.FindElement(By.Id(""));
+
+            //sorter kopien
+
+            listeKopi2.Sort();
+
+            //Kontroller sorteringen er ens.
+            Assert.AreEqual(listeKopi2[0], listeKopi1[0]);
+            Assert.AreEqual(listeKopi2[13], listeKopi1[13]);
+            Assert.AreEqual(listeKopi2[24], listeKopi1[24]);
+
+
         }
         [TestMethod]
         public void TestListeSorteringKan∆ndres() 
         {
-
             string url = useLocal ? _localUrl : _onlineUrl;
 
             _driver.Navigate().GoToUrl(url);
 
+            //Hent Listen
             WebDriverWait wdWait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
-            IWebElement ventPÂListe = wdWait.Until(ventPÂListe => ventPÂListe.FindElement(By.Id("drinksListe")));
-            ReadOnlyCollection<IWebElement> drinksListe = _driver.FindElements(By.Id("drinksListe"));
+            IWebElement ventPÂListe = wdWait.Until(ventPÂListe => ventPÂListe.FindElement(By.TagName("li")));
 
-            IWebElement objekt1Sortering1 = drinksListe.First();
-            string Data1 = objekt1Sortering1.Text;
-            IWebElement objekt2Sortering1 = drinksListe.Last();
-            string Data2 = objekt2Sortering1.Text;
+            IReadOnlyList<IWebElement> drinksListe = _driver.FindElements(By.ClassName("drinkNavn"));
 
-            // ∆ndring af sortering
+            //lav kopi af listen
 
-            IWebElement ÊndreSorteringKnap = _driver.FindElement(By.Id("sortBtnKategori"));
+            Assert.AreEqual(25, drinksListe.Count);
+            List<string> listeKopi1 = new List<string>();
+            foreach (var drink in drinksListe)
+            {
+                listeKopi1.Add(drink.Text);
+            }
+            Assert.AreEqual(25, listeKopi1.Count);
+
+            //∆ndre sortering pÂ siden
+            IWebElement ÊndreSorteringKnap = _driver.FindElement(By.Id("sortByDsc"));
             ÊndreSorteringKnap.Click();
 
-            ReadOnlyCollection<IWebElement> drinksListe2 = _driver.FindElements(By.Id("drinksListe"));
+            //Lav ny liste.
+            IReadOnlyList<IWebElement> drinksListe2 = _driver.FindElements(By.ClassName("drinkNavn"));
+                        
+            Assert.AreEqual(25, drinksListe2.Count);
+            List<string> listeKopi2 = new List<string>();
+            foreach (var drink in drinksListe2)
+            {
+                listeKopi2.Add(drink.Text);
+            }
+            Assert.AreEqual(25, listeKopi2.Count);
 
-            IWebElement objekt3Sortering2 = drinksListe2.First();
-            string Data3 = objekt3Sortering2.Text;
-            IWebElement objekt4Sortering2 = drinksListe2.Last();
-            string Data4 = objekt4Sortering2.Text;
-
-            Assert.AreNotEqual(Data1, Data3);
-            Assert.AreNotEqual(Data2, Data4);
+            //Sammenlign lister
+            Assert.AreNotEqual(listeKopi1[0], listeKopi2[0]);
+            Assert.AreNotEqual(listeKopi1[13], listeKopi2[13]);
+            Assert.AreNotEqual(listeKopi1[24], listeKopi2[24]);
         }
 
         [TestMethod]
