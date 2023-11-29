@@ -11,7 +11,7 @@ namespace DrinkAppUiTest
         private static readonly string _driverDirectory = "C:\\webdrivers";
         private static IWebDriver _driver;
         // Url skal linke direkte til get list.
-        private static string _localUrl = "";
+        private static string _localUrl = "http://127.0.0.1:5500/DrinkList.html";
         private static string _onlineUrl = "";
         bool useLocal = true;
         [ClassInitialize]
@@ -51,9 +51,9 @@ namespace DrinkAppUiTest
 
             int count = 0;
             //sammenlign listerne
-            foreach (IWebElement drink in drinksListe)
+            foreach (var drink in drinksListe)
             {
-                Assert.AreEqual(drink.Text, listeKopi[count].Text);
+                Assert.AreEqual(drinksListe[count], listeKopi[count]);
                 count++;
             }
 
