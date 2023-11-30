@@ -15,7 +15,7 @@ namespace DrinkAppUiTest
     {
         private static readonly string DriverDirectory = "C:\\webdrivers";
         private static IWebDriver _driver;
-        private static string _localUrl = "http://127.0.0.1:5501/DrinkList.html";
+        private static string _localUrl = "http://127.0.0.1:5500/DrinkList.html";
         private static string _onlineUrl = "";
         bool useLocal = true;
 
@@ -71,7 +71,7 @@ namespace DrinkAppUiTest
             
             IWebElement ventPåListe = wdWait.Until(ventPåListe => ventPåListe.FindElement(By.TagName("li")));
 
-            ReadOnlyCollection<IWebElement> drinksListe = _driver.FindElements(By.ClassName("drinkNavne"));
+            ReadOnlyCollection<IWebElement> drinksListe = _driver.FindElements(By.ClassName("AlkoholJaNej"));
             Assert.AreEqual(25, drinksListe.Count);
 
             List<string> listeKopi = new List<string>();
@@ -85,14 +85,14 @@ namespace DrinkAppUiTest
             }
             Assert.AreEqual(25, listeKopi.Count);
             
-            IWebElement filterMenu = _driver.FindElement(By.Id("filterMenu"));
+            IWebElement filterMenu = _driver.FindElement(By.Id("dropdownMenuButton"));
             filterMenu.Click();
             
-            IWebElement filterAlcoholic = _driver.FindElement(By.Id("filterAlcoholic"));
+            IWebElement filterAlcoholic = _driver.FindElement(By.Id("filterAlcholic"));
             filterAlcoholic.Click();
             
             ReadOnlyCollection<IWebElement> drinksListe2 = _driver.FindElements(By.ClassName("AlkoholJaNej"));
-            Assert.AreEqual(24, drinksListe2.Count);
+            Assert.AreEqual(23, drinksListe2.Count);
 
             List<string> listeKopi2 = new List<string>();
             foreach (var drink in drinksListe2)
@@ -103,7 +103,7 @@ namespace DrinkAppUiTest
             {
                 Assert.IsTrue(listeKopi2[i].Length > 0);
             }
-            Assert.AreEqual(24, listeKopi2.Count);
+            Assert.AreEqual(23, listeKopi2.Count);
             
         }
         
