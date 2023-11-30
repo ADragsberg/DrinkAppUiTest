@@ -88,7 +88,7 @@ namespace DrinkAppUiTest
             IWebElement filterMenu = _driver.FindElement(By.Id("dropdownMenuButton"));
             filterMenu.Click();
             
-            IWebElement filterAlcoholic = _driver.FindElement(By.Id("filterAlcholic"));
+            IWebElement filterAlcoholic = _driver.FindElement(By.Id("filterAlcoholic"));
             filterAlcoholic.Click();
             
             ReadOnlyCollection<IWebElement> drinksListe2 = _driver.FindElements(By.ClassName("AlkoholJaNej"));
