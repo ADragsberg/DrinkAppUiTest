@@ -38,7 +38,7 @@ namespace DrinkAppUiTest
 
             //Hent Listen
             WebDriverWait wdWait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
-            IWebElement ventPåListe = wdWait.Until(ventPåListe => ventPåListe.FindElement(By.TagName("li")));
+            IWebElement ventPÃ¥Liste = wdWait.Until(ventPÃ¥Liste => ventPÃ¥Liste.FindElement(By.TagName("li")));
 
             IReadOnlyList<IWebElement> drinksListe = _driver.FindElements(By.ClassName("drinkNavn"));
             
@@ -69,7 +69,7 @@ namespace DrinkAppUiTest
 
         }
         [TestMethod]
-        public void TestListeSorteringKanÆndres() 
+        public void TestListeSorteringKanÃ†ndres() 
         {
             string url = useLocal ? _localUrl : _onlineUrl;
 
@@ -77,8 +77,8 @@ namespace DrinkAppUiTest
 
             //Hent Listen
             WebDriverWait wdWait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
-            //Vigtigt at vente på list item og ikke bare listen da der er forsinkelse mellem listen eksisterer og der er objekter i listen.
-            IWebElement ventPåListe = wdWait.Until(ventPåListe => ventPåListe.FindElement(By.TagName("li")));
+            //Vigtigt at vente pï¿½ list item og ikke bare listen da der er forsinkelse mellem listen eksisterer og der er objekter i listen.
+            IWebElement ventPÃ¥Liste = wdWait.Until(ventPÃ¥Liste => ventPÃ¥Liste.FindElement(By.TagName("li")));
 
             IReadOnlyList<IWebElement> drinksListe = _driver.FindElements(By.ClassName("drinkNavn"));
 
@@ -92,9 +92,9 @@ namespace DrinkAppUiTest
             }
             Assert.AreEqual(25, listeKopi1.Count);
 
-            //Ændre sortering på siden
-            IWebElement ændreSorteringKnap = _driver.FindElement(By.Id("sortByDsc"));
-            ændreSorteringKnap.Click();
+            //ï¿½ndre sortering pï¿½ siden
+            IWebElement Ã¦ndreSorteringKnap = _driver.FindElement(By.Id("sortByDsc"));
+            Ã¦ndreSorteringKnap.Click();
 
             //Lav ny liste.
             IReadOnlyList<IWebElement> drinksListe2 = _driver.FindElements(By.ClassName("drinkNavn"));
@@ -121,7 +121,7 @@ namespace DrinkAppUiTest
             _driver.Navigate().GoToUrl(url);
 
             WebDriverWait wdWait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
-            IWebElement ventPåListe = wdWait.Until(ventPåListe => ventPåListe.FindElement(By.TagName("li")));
+            IWebElement ventPÃ¥Liste = wdWait.Until(ventPÃ¥Liste => ventPÃ¥Liste.FindElement(By.TagName("li")));
 
             IReadOnlyList<IWebElement> billeder = _driver.FindElements(By.TagName("img"));
 
@@ -138,7 +138,7 @@ namespace DrinkAppUiTest
 
             WebDriverWait wdWait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
             
-            IWebElement ventPåListe = wdWait.Until(ventPåListe => ventPåListe.FindElement(By.TagName("li")));
+            IWebElement ventPÃ¥Liste = wdWait.Until(ventPÃ¥Liste => ventPÃ¥Liste.FindElement(By.TagName("li")));
             ReadOnlyCollection<IWebElement> drinksListe = _driver.FindElements(By.ClassName("drinkNavn"));
             Assert.AreEqual(25, drinksListe.Count);
 
@@ -167,7 +167,7 @@ namespace DrinkAppUiTest
             _driver.Navigate().GoToUrl(url);
 
             WebDriverWait wdWait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
-            IWebElement ventPåListe = wdWait.Until(ventPåListe => ventPåListe.FindElement(By.TagName("li")));
+            IWebElement ventPÃ¥Liste = wdWait.Until(ventPÃ¥Liste => ventPÃ¥Liste.FindElement(By.TagName("li")));
             ReadOnlyCollection<IWebElement> drinksListe = _driver.FindElements(By.ClassName("readButton"));
             Assert.AreEqual(25, drinksListe.Count);
 
