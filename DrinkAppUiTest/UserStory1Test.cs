@@ -77,6 +77,7 @@ namespace DrinkAppUiTest
 
             //Hent Listen
             WebDriverWait wdWait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
+            //Vigtigt at vente pÂ list item og ikke bare listen da der er forsinkelse mellem listen eksisterer og der er objekter i listen.
             IWebElement ventPÂListe = wdWait.Until(ventPÂListe => ventPÂListe.FindElement(By.TagName("li")));
 
             IReadOnlyList<IWebElement> drinksListe = _driver.FindElements(By.ClassName("drinkNavn"));
@@ -120,21 +121,11 @@ namespace DrinkAppUiTest
             _driver.Navigate().GoToUrl(url);
 
             WebDriverWait wdWait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
-            IWebElement ventPÂListe = wdWait.Until(ventPÂListe => ventPÂListe.FindElement(By.Id("drinksListe")));
-            ReadOnlyCollection<IWebElement> drinksListe = _driver.FindElements(By.Id("drinksListe"));
+            IWebElement ventPÂListe = wdWait.Until(ventPÂListe => ventPÂListe.FindElement(By.TagName("li")));
 
-            // Hvis flg. kaster exception fejler testen fordi der ikke er noget billede pÂ siden.
-            ReadOnlyCollection<IWebElement> billede = _driver.FindElements(By.TagName("img"));
+            IReadOnlyList<IWebElement> billeder = _driver.FindElements(By.TagName("img"));
 
-
-            // Tester om der er billede i hvert object i listen.
-            foreach (IWebElement element in drinksListe)
-            {
-                IWebElement ListObject = element.FindElement(By.TagName("img"));
-
-                Assert.IsNotNull(ListObject);
-
-            }
+            Assert.AreEqual(25, billeder.Count);
 
         }
 
@@ -146,16 +137,26 @@ namespace DrinkAppUiTest
             _driver.Navigate().GoToUrl(url);
 
             WebDriverWait wdWait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
-            IWebElement ventPÂListe = wdWait.Until(ventPÂListe => ventPÂListe.FindElement(By.Id("drinksListe")));
-            ReadOnlyCollection<IWebElement> drinksListe = _driver.FindElements(By.Id("drinksListe"));
+            
+            IWebElement ventPÂListe = wdWait.Until(ventPÂListe => ventPÂListe.FindElement(By.TagName("li")));
+            ReadOnlyCollection<IWebElement> drinksListe = _driver.FindElements(By.ClassName("drinkNavn"));
+            Assert.AreEqual(25, drinksListe.Count);
 
-            foreach (IWebElement element in drinksListe)
+            //Byg liste af strings
+
+            List<string> listeKopi = new List<string>();
+            foreach (var drink in drinksListe)
             {
-                IWebElement ListObject = element.FindElement(By.Id("drinkNavn"));
-
-                Assert.IsNotNull(ListObject);
-
+                listeKopi.Add(drink.Text);
             }
+
+            for (int i = 0; i < listeKopi.Count; i++)
+            {
+                Assert.IsTrue(listeKopi[i].Length > 0);
+            }
+            Assert.AreEqual(25, listeKopi.Count);
+
+
         }
 
         [TestMethod]
@@ -166,16 +167,11 @@ namespace DrinkAppUiTest
             _driver.Navigate().GoToUrl(url);
 
             WebDriverWait wdWait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
-            IWebElement ventPÂListe = wdWait.Until(ventPÂListe => ventPÂListe.FindElement(By.Id("drinksListe")));
-            ReadOnlyCollection<IWebElement> drinksListe = _driver.FindElements(By.Id("drinksListe"));
+            IWebElement ventPÂListe = wdWait.Until(ventPÂListe => ventPÂListe.FindElement(By.TagName("li")));
+            ReadOnlyCollection<IWebElement> drinksListe = _driver.FindElements(By.ClassName("readButton"));
+            Assert.AreEqual(25, drinksListe.Count);
 
-            foreach (IWebElement element in drinksListe)
-            {
-                IWebElement ListObject = element.FindElement(By.TagName("button"));
 
-                Assert.IsNotNull(ListObject);
-
-            }
 
         }
     }
