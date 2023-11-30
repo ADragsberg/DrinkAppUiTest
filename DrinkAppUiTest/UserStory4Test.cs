@@ -107,10 +107,6 @@ namespace DrinkAppUiTest
             
         }
         
-        
-        
-        
-        
         //Lad den være som den er til linje 83. du skal stadig finde alle elementer i listen nemlig 
         //Linje 96 skal du ændre det til at finde Dropdown menuen. så den hedder filterMenu 
         //også skal den klikke. 
@@ -118,6 +114,53 @@ namespace DrinkAppUiTest
         //og igen klikke på den.
         //Derefter skriv noglelunde samme fra 100 til 113 
         // alt dette tager udgangspunkt i Branch us4 og klasse us1test
+
+        [TestMethod]
+    public void TestAlkoholFilterNej()
+    {
+        string url = useLocal ? _localUrl : _onlineUrl;
+
+        _driver.Navigate().GoToUrl(url);
+
+        WebDriverWait wdWait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
+
+        IWebElement ventPåListe = wdWait.Until(ventPåListe => ventPåListe.FindElement(By.TagName("li")));
+
+        ReadOnlyCollection<IWebElement> drinksListe = _driver.FindElements(By.ClassName("AlkoholJaNej"));
+        Assert.AreEqual(25, drinksListe.Count);
+
+        List<string> listeKopi = new List<string>();
+        foreach (var drink in drinksListe)
+        {
+            listeKopi.Add(drink.Text);
+        }
+        for (int i = 0; i < listeKopi.Count; i++)
+        {
+            Assert.IsTrue(listeKopi[i].Length > 0);
+        }
+        Assert.AreEqual(25, listeKopi.Count);
+
+        IWebElement filterMenu = _driver.FindElement(By.Id("dropdownMenuButton"));
+        filterMenu.Click();
+
+        IWebElement filterAlcoholic = _driver.FindElement(By.Id("filterNonAlcoholic"));
+        filterAlcoholic.Click();
+
+        ReadOnlyCollection<IWebElement> drinksListe2 = _driver.FindElements(By.ClassName("AlkoholJaNej"));
+        Assert.AreEqual(1, drinksListe2.Count);
+
+        List<string> listeKopi2 = new List<string>();
+        foreach (var drink in drinksListe2)
+        {
+            listeKopi2.Add(drink.Text);
+        }
+        for (int i = 0; i < listeKopi2.Count; i++)
+        {
+            Assert.IsTrue(listeKopi2[i].Length > 0);
+        }
+        Assert.AreEqual(1, listeKopi2.Count);
+
+    }
 
 
     }
