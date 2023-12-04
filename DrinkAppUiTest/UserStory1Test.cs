@@ -2,6 +2,8 @@ using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using System.Collections.ObjectModel;
+using static System.Net.WebRequestMethods;
+using OpenQA.Selenium.Chrome;
 
 namespace DrinkAppUiTest
 {
@@ -11,15 +13,16 @@ namespace DrinkAppUiTest
         private static readonly string _driverDirectory = "C:\\webdrivers";
         private static IWebDriver _driver;
         // Url skal linke direkte til get list.
-        private static string _localUrl = "http://127.0.0.1:5500/DrinkList.html";
+        private static string _localUrl = "http://127.0.0.1:5501/DrinkList.html";
         private static string _onlineUrl = "";
         bool useLocal = true;
+
+
         [ClassInitialize]
-        // 
         public static void Setup(TestContext context)
         {
-            _driver = new FirefoxDriver(_driverDirectory);
-            //_driver = new ChromeDriver(_driverDirectory);
+            //_driver = new FirefoxDriver(_driverDirectory);
+            _driver = new ChromeDriver(_driverDirectory);
             //_driver = new EdgeDriver(_driverDirectory);
         }
         [ClassCleanup]

@@ -15,7 +15,7 @@ namespace DrinkAppUiTest
     {
         private static readonly string DriverDirectory = "C:\\webdrivers";
         private static IWebDriver _driver;
-        private static string _localUrl = "http://127.0.0.1:5500/DrinkList.html";
+        private static string _localUrl = "http://127.0.0.1:5501/DrinkList.html";
         private static string _onlineUrl = "";
         bool useLocal = true;
 
