@@ -15,7 +15,7 @@ namespace DrinkAppUiTest
     {
         private static readonly string DriverDirectory = "C:\\webdrivers";
         private static IWebDriver _driver;
-        private static string _localUrl = "http://127.0.0.1:5500/DrinkList.html";
+        private static string _localUrl = "http://localhost:8080";
         private static string _onlineUrl = "";
         bool useLocal = true;
 
@@ -23,8 +23,8 @@ namespace DrinkAppUiTest
         [ClassInitialize]
         public static void Setup(TestContext context) // Nok vigtigt at den er static, har TestContext som parameter.
         {
-            _driver = new ChromeDriver(DriverDirectory);
-            //_driver = new FirefoxDriver(DriverDirectory);
+            //_driver = new ChromeDriver(DriverDirectory);
+            _driver = new FirefoxDriver(DriverDirectory);
             //_driver = new EdgeDriver(DriverDirectory);
         }
 

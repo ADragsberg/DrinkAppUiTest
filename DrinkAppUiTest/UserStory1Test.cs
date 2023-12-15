@@ -11,7 +11,7 @@ namespace DrinkAppUiTest
         private static readonly string _driverDirectory = "C:\\webdrivers";
         private static IWebDriver _driver;
         // Url skal linke direkte til get list.
-        private static string _localUrl = "http://127.0.0.1:5500/DrinkList.html";
+        private static string _localUrl = "http://localhost:8080";
         private static string _onlineUrl = "";
         bool useLocal = true;
         [ClassInitialize]
